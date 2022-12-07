@@ -18,21 +18,29 @@ const api = axios.create({/* local onde é desparado a requisição igual nos es
 
   
 
-  const response = useCallback(async ({nome, idade,  numero, referencia}) => {
+  const response = useCallback(async ({nome, idade,  contato, logradouro, numero, referencia, cep, cidade, estado, cpf, rg, cnpj}) => {
 
-    const result = await api.post('nome do seu endpoint', {
+    const result = await api.post('/api/salvarUsuario', {
       //Informe os campos que vão ser enviados pro back-end, separados por ,
+      nome, 
+      idade,
+      contato,
     })
 
+    const documento = {//para fazer uma ligação com uma classe
+      cpf: cpf,
+      rg: rg,
+      cnpj: cnpj
+    };
+    
     const endereco = {
-      logradouro: nome,
+      logradouro: logradouro,
       numero: numero,
       referencia: referencia,
-      cep:"684646",
-      cidade:"bbbbbbbb",
-      estado:"aaaaaaaaa"
+      cep: cep,
+      cidade: cidade,
+      estado: estado
     };
-
 
     if(result.data.statusCodeValue === 201) {
       alert("Cadastro realizado com sucesso, boa sorte!")
@@ -69,6 +77,10 @@ const api = axios.create({/* local onde é desparado a requisição igual nos es
 
         <Scope path='formSenac'>
           <Input name="nome" placeholder="Nome"/>
+          <Input type="text" name="idade" mask="999" placeholder="idade"/>
+          <Input type="text" name="contato" mask="(99) 9 9999-9999" placeholder="Telefone Celular"/>
+          <Input type="text" name="cpf" mask="999.999.999-99" placeholder="CPF"/>
+          <Input type="text" name="rg" mask="99.999.999-9" placeholder="RG"/>
           {/**Exemplos de como criar os campos no formulario */}
           {/* <Input type="text" name="cpf" mask="999.999.999-99" placeholder="Cpf" maxlength="11"/>
           <Input type="email" name="email" placeholder="E-mail"/>
